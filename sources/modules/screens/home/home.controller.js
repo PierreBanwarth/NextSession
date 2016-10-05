@@ -9,11 +9,10 @@
    * Displays the home screen.
    * @constructor
    */
-  function HomeController(logger,
+    function HomeController(logger,
                           stationService,
                           quoteService) {
-    logger = logger.getLogger('home');
-
+      logger = logger.getLogger('home');
     /*
      * View model
      */
@@ -40,23 +39,23 @@
       logger.log('init stations');
       stationService
         .getAllStation()
-        .then(function(AllStation) {
-          vm.AllStation = AllStation;
+        .then(function(allStation) {
+          vm.allStation = allStation;
           vm.center = {
-            lat: vm.AllStation.zone.areas[0].area_map_lat,
-            lng: vm.AllStation.zone.areas[0].area_map_lng,
-            zoom: vm.AllStation.zone.areas[0].map_level
+            lat: vm.allStation.zone.areas[0].area_map_lat,
+            lng: vm.allStation.zone.areas[0].area_map_lng,
+            zoom: vm.allStation.zone.areas[0].map_level
           };
-          var stations = vm.AllStation.zone.areas[0].stations;
+          var stations = vm.allStation.zone.areas[0].stations;
           vm.markers = [];
-          for(var i=0; i<stations.length; i++){
+          for ( var i = 0; i < stations.length; i++){
             var marker = {
               lat: stations[i].station_lat,
               lng: stations[i].station_lng,
               focus: false,
               message: stations[i].station_name,
-              draggable: false            
-            }
+              draggable: false
+            };
             vm.markers.push(marker);
           }
         })
