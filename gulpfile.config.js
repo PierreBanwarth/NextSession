@@ -46,7 +46,15 @@ exports.backendProxy = [
     context: '/api',
     options: {
       pathRewrite: {'^/api': ''},
-      target: 'http://api.icndb.com',
+      target: 'http://api.icndb.com/',
+      changeOrigin: true
+    }
+  },
+  {
+    context: '/station',
+    options: {
+      pathRewrite: {'^/station': ''},
+      target: 'http://www.metromobilite.fr',
       changeOrigin: true
     }
   }

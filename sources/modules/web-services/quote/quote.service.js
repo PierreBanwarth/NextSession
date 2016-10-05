@@ -12,7 +12,6 @@
   function quoteService($q,
                         contextService,
                         restService) {
-
     /*
      * Constants
      */
