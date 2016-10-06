@@ -32,6 +32,12 @@
         templateUrl: 'modules/screens/about/about.html',
         controller: 'aboutController as vm',
         data: {title: gettext('About')}
+      })
+      .state('app.session', {
+        url: '/session',
+        templateUrl: 'modules/screens/session/session.html',
+        controller: 'sessionController as vm',
+        data: {title: gettext('Session')}
       });
 
   }

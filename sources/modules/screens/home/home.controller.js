@@ -48,6 +48,10 @@
         .getAllStation()
         .then(function(allStation) {
           vm.allStation = allStation;
+          
+        })
+        .finally(function() {
+          vm.isLoading = false;
           vm.center = {
             lat:  vm.allStation.zone.areas[0].area_map_lat,
             lng:  vm.allStation.zone.areas[0].area_map_lng,
@@ -72,9 +76,6 @@
             vm.markers.push(marker);
             }
           }
-        })
-        .finally(function() {
-          vm.isLoading = false;
         });
     }
     init();

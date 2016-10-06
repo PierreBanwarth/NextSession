@@ -1,0 +1,15 @@
+<section id="session-screen" class="session-screen container-fluid">
+ 
+    <div ui-loading="vm.isLoading"></div>
+    
+		<div class="row">
+			<div class="col-sm-2">
+				<div ng-repeat="marker in vm.markers">
+			    	{{marker.message}}
+				</div>
+	    	</div>
+		<div class="col-sm-10">
+			<leaflet class="map" lf-center="vm.center" markers="vm.markers"></leaflet>
+		</div>
+	</div>  
+ </section>

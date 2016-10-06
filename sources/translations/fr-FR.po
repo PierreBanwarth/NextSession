@@ -10,6 +10,11 @@ msgstr ""
 msgid "About"
 msgstr "A propos"
 
+#: main.routes.js:40
+#: modules/shell/shell.html:29
+msgid "Session"
+msgstr "Session"
+
 #: main.run.js:84
 #: modules/screens/about/about.html:3
 #: modules/shell/shell.html:15

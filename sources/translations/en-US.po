@@ -6,9 +6,14 @@ msgstr ""
 "Language: en-US\n"
 
 #: main.routes.js:34
-#: modules/shell/shell.html:29
+#: modules/shell/shell.html:35
 msgid "About"
 msgstr "About"
+
+#: main.routes.js:40
+#: modules/shell/shell.html:29
+msgid "Session"
+msgstr "Session"
 
 #: main.run.js:84
 #: modules/screens/about/about.html:3

@@ -24,7 +24,7 @@
 
       // REST backend configuration, used for all web services using restService
       server: {
-        restServerUrl: 'http://www.metromobilite.fr/data/Carto/Statique/ListeDesStationsOMMS.json',
+        restServerUrl: '',
         restUri: ''
       }
 

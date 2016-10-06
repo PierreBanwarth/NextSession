@@ -1,0 +1,7 @@
+// Encapsulate component style into its own "namespace "to avoid naming and css collision
+.session-screen {
+  .map{
+  	width : 100%;
+  	height : 480px;
+  }
+}
