@@ -1,15 +1,15 @@
-<section id="home-screen" class="home-screen container-fluid">
- 
-    <div ui-loading="vm.isLoading"></div>
-    
-		<div class="row">
-			<div class="col-sm-2">
-				<div ng-repeat="marker in vm.markers">
-			    	{{marker.message}}
-				</div>
-	    	</div>
-		<div class="col-sm-10">
-			<leaflet class="map" lf-center="vm.center" markers="vm.markers"></leaflet>
-		</div>
-	</div>  
- </section>
+<md-sidenav md-component-id="left" class="md-sidenav-left" md-is-open="isOpen">
+    <div ng-repeat="marker in vm.markers">
+        <div tabelement name="marker.name" car="marker.availableCar" free="marker.totalSpace"></div>
+   </div>
+</md-sidenav>
+<md-content>
+    <section id="home-screen" class="home-screen container-fluid">
+        <div ui-loading="vm.isLoading"></div>
+        <div class="well">
+            <leaflet class="map" defaults="vm.defaults" lf-center="vm.center" markers="vm.markers"></leaflet>
+            <button ng-click="isOpen=!isOpen" ng-init="isOpen=false">Liste des stations</button>
+       </div>
+     </section>
+</md-content>
+

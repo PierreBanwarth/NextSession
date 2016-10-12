@@ -3,7 +3,7 @@
 /*
  * Tests for quote service.
  */
-describe('stationService', function() {
+describe('webStationService', function() {
 
   // Constants
   var ERROR_STATION = 'Error, could not load stations';
@@ -11,7 +11,7 @@ describe('stationService', function() {
   var $q;
   var $rootScope;
   var restService;
-  var stationService;
+  var webStationService;
   var logger;
 
   beforeEach(function() {
@@ -19,14 +19,14 @@ describe('stationService', function() {
 
     inject(function(_$q_,
                     _$rootScope_,
-                    _stationService_,
+                    _webStationService_,
                     _restService_,
                     _logger_
                     ) {
 
       $q = _$q_;
       $rootScope = _$rootScope_;
-      stationService = _stationService_;
+      webStationService = _webStationService_;
       restService = _restService_;
       logger = _logger_;
     });
@@ -34,10 +34,10 @@ describe('stationService', function() {
   });
 
   it('should have a getAllStation method', function() {
-    expect(typeof (stationService.getAllStation)).toBe('function');
+    expect(typeof (webStationService.getAllStation)).toBe('function');
   });
   it('should have a getDataStation method', function() {
-    expect(typeof (stationService.getDataStation)).toBe('function');
+    expect(typeof (webStationService.getDataStation)).toBe('function');
   });
   describe('getDataStation',function(){
     it('should call rest service get method and return Data', function(done){
@@ -50,7 +50,7 @@ describe('stationService', function() {
           return deferred.promise;
         });
       //Act
-      var promise = stationService.getDataStation();
+      var promise = webStationService.getDataStation();
       //Asset
       promise.then(function(station){
         expect(restService.get).toHaveBeenCalled();
@@ -74,7 +74,7 @@ describe('stationService', function() {
       });
 
       // Act
-      var promise = stationService.getAllStation();
+      var promise = webStationService.getAllStation();
 
       // Assert
       promise.then(function(station) {
@@ -98,12 +98,12 @@ describe('stationService', function() {
       logger.addObserver(observerSpy);
       logger = logger.getLogger();
       // Act
-      var promise = stationService.getAllStation();
+      var promise = webStationService.getAllStation();
 
       // Assert
-      promise.then(function(station) {
+      promise.then(function() {
         expect(restService.get).toHaveBeenCalled();
-        expect(observerSpy).toHaveBeenCalledWith(ERROR_STATION, 'stationService', 'log', undefined );
+        expect(observerSpy).toHaveBeenCalledWith(ERROR_STATION, 'webStationService', 'log', undefined );
         done();
       });
 
@@ -120,12 +120,12 @@ describe('stationService', function() {
       logger.addObserver(observerSpy);
       logger = logger.getLogger();
       // Act
-      var promise = stationService.getAllStation();
+      var promise = webStationService.getAllStation();
 
       // Assert
-      promise.then(function(station) {
+      promise.then(function() {
         expect(restService.get).toHaveBeenCalled();
-        expect(observerSpy).toHaveBeenCalledWith(ERROR_STATION, 'stationService', 'log', undefined );
+        expect(observerSpy).toHaveBeenCalledWith(ERROR_STATION, 'webStationService', 'log', undefined );
         done();
       });
       $rootScope.$apply();

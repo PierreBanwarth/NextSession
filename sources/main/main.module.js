@@ -9,7 +9,9 @@
     'ngSanitize',
     'ui.router',
     'ui.bootstrap',
-    'leaflet-directive'
+    'leaflet-directive',
+    'ngMaterial',
+    'firebase'
   ]);
 
 })();

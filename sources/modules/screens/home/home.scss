@@ -1,7 +1,10 @@
 // Encapsulate component style into its own "namespace "to avoid naming and css collision
 .home-screen {
-  .map{
-  	width : 100%;
-  	height : 480px;
-  }
+	.map{
+		width : 100%;
+		height : 480px;	
+	}
+	.scrollme{
+		max-height:480px;	
+	}
 }

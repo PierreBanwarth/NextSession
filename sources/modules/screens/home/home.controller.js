@@ -1,83 +1,55 @@
 (function() {
-
   'use strict';
 
   angular
-    .module('app')
-    .controller('homeController', HomeController);
+  .module('app')
+  .controller('homeController', homeController);
   /**
    * Displays the home screen.
    * @constructor
    */
-    function HomeController(logger,
-                          stationService,
-                          quoteService) {
-      logger = logger.getLogger('home');
+   function homeController(logger,
+    stationService
+    ) {
+    logger = logger.getLogger('home');
     /*
      * View model
      */
-
-    var vm = this;
-
-    vm.isLoading = true;
-    vm.quote = null;
+     var vm = this;
+     vm.isLoading = true;
     //fix an error with not set center caused by leaflet
     vm.center = {
       lat: 45.188616,
       lng: 5.725969,
       zoom: 1
     };
-    /*
-     * Internal
-     */
-
-    /**
-     * Init controller.
-     */
-    function init() {
-
-      logger.log('init stations');
-      stationService
-          .getDataStation()
-          .then( function( dataStation){
-            vm.dataStation = dataStation;
-            console.log(vm.dataStation);
-      });
-
-      stationService
-        .getAllStation()
-        .then(function(allStation) {
-          vm.allStation = allStation;
-          
-        })
-        .finally(function() {
-          vm.isLoading = false;
-          vm.center = {
-            lat:  vm.allStation.zone.areas[0].area_map_lat,
-            lng:  vm.allStation.zone.areas[0].area_map_lng,
-            zoom: vm.allStation.zone.areas[0].map_level
-          };
-          var stations = vm.allStation.zone.areas[0].stations;
-          vm.markers = [];
-          for ( var i = 0; i < stations.length; i++){
-            var id = stations[i].station_id;
-            if ( id){
-              var availableCar =  vm.dataStation[id].station.available_car;
-              var totalCar =  vm.dataStation[id].station.parking_space_free;
-              var marker = {
-              lat: stations[i].station_lat,
-              lng: stations[i].station_lng,
-              focus: false,
-              message: stations[i].station_name + ' ' + availableCar + '/' + totalCar,
-              draggable: false,
-              availableCar: availableCar,
-              totalSpace: totalCar
-            };
-            vm.markers.push(marker);
-            }
-          }
-        });
+    vm.defaults= {
+      zoomControlPosition: 'topright'
     }
+    vm.markers = [];
+    /*
+    * load data is calling a updating service and update data such as center and markers.
+    */
+    var loadData = function() {
+      return stationService.updateDataStation()
+      .then(function(result) {
+        vm.center = stationService.getCentre();
+        vm.markers = stationService.getMarkers();
+        return result;
+      })
+      .catch(function() {
+        logger.log('error while tryng to updateDataStation');
+      });
+    };
+    var init = function() {
+      logger.log('init stations');
+      loadData().catch(function() {
+        logger.log('error while loading datas');
+      })
+      .finally(function() {
+        vm.isLoading = false;
+      });
+    };
     init();
   }
 })();
