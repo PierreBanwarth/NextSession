@@ -1,19 +1,15 @@
 <md-sidenav md-component-id="left" class="md-sidenav-left" md-is-open="isOpen">
-    <div ng-repeat="marker in vm.markers">
-        <div tabelement name="marker.name"></div>
-   </div>
+    <div ng-repeat="marker in markers">
+        <div tabelement name="marker.message"></div>
+    </div>
 </md-sidenav>
 <md-content>
     <section id="home-screen" class="home-screen container-fluid">
-        <div ui-loading="vm.isLoading"></div>
+        <div ui-loading="isLoading"></div>
         <div class="well">
-            <leaflet class="map" defaults="vm.defaults" lf-center="vm.center" markers="vm.markers"></leaflet>
+            <leaflet class="map" defaults="defaults" lf-center="center" markers="markers" event-broadcast="events"></leaflet>
             <button ng-click="isOpen=!isOpen" ng-init="isOpen=false">Liste des sessions</button>
             
-       </div>
-     </section>
-     <md-input-container>
-     	<label>Color</label>
-     	<input type="text" ng-model="color" required md-maxlength="10">
-     </md-input-container>
+        </div>
+    </section>
 </md-content>

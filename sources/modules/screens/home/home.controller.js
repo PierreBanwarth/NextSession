@@ -4,7 +4,7 @@
   angular
   .module('app')
   .controller('homeController', homeController);
-  /**
+  /**           
    * Displays the home screen.
    * @constructor
    */

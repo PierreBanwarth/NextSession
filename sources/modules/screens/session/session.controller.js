@@ -4,52 +4,79 @@
 
   angular
   .module('app')
-  .controller('sessionController', sessionController);
-  /**
-   * Displays the home screen.
-   * @constructor
-   */
-   function sessionController(logger,
-    sessionService) {
-    logger = logger.getLogger('home');
-    /*
-     * View model
-     */
+  .controller('sessionController', ['$scope','$mdDialog' ,'logger','sessionService',
+    function($scope,$mdDialog, logger,sessionService){
 
-     var vm = this;
-
-     vm.isLoading = true;
-     vm.quote = null;
+      logger = logger.getLogger('home');
+      /*
+       * View model
+       */
+       $scope.events = {};
+       $scope.isLoading = true;
+       $scope.quote = null;
     //fix an error with not set center caused by leaflet
-    vm.center = {
+    $scope.center = {
       lat: 45.188616,
       lng: 5.725969,
       zoom: 1
     };
-    vm.defaults= {
+    $scope.defaults= {
       zoomControlPosition: 'topright'
-    }
-    /*
-     * Internal
-     */
+    };
+    
 
-    /**
-     * Init controller.
-     */
-    function init() { 
 
-      logger.log('init stations');
-      sessionService
-      .getSessions()
-      .then(function(dataSession) {
-        console.log(dataSession);
-        vm.dataSession = dataSession;
-        console.log(vm.dataSession);
-      }).finally(function() {
-        vm.isLoading = false;
-      });
-       vm.markers = sessionService.getMarkers();
-    }
-    init();
+    $scope.showCustom = function(event) {
+     $mdDialog.show({
+      clickOutsideToClose: true,
+      scope: $scope,        
+      preserveScope: true,           
+      templateUrl: 'modules/screens/session/modale.tpl.html',
+      parent: angular.element(document.body),
+      controller: function DialogController($scope, $mdDialog) {
+        $scope.closeDialog = function() {
+          $mdDialog.hide();
+        }
+        $scope.validDialog = function(){
+          // need to validate input by user
+          console.log(event);
+          sessionService.addSessions($scope.description, $scope.place, event.latlng.lat, event.latlng.lng);
+          $mdDialog.hide();
+          $scope.description = '';
+          $scope.place ='';
+          $scope.update();
+
+        }
+      }
+    });
+   };
+   $scope.$on("leafletDirectiveMap.click", function(event, args){
+    var leafEvent = args.leafletEvent;
+    $scope.showCustom(leafEvent);
+    // need to send new session to database
+  });
+   $scope.update= function(){
+    sessionService
+    .getSessions()
+    .then(function(dataSession) {
+      $scope.dataSession = dataSession;
+    });
+    $scope.markers = sessionService.getMarkers();
   }
-})();
+  $scope.init = function() { 
+
+    logger.log('init sessions');
+    sessionService
+    .getSessions()
+    .then(function(dataSession) {
+      $scope.dataSession = dataSession;
+    }).finally(function() {
+      $scope.isLoading = false;
+    });
+    $scope.markers = sessionService.getMarkers();
+  };
+  $scope.init();
+}
+])
+})
+();

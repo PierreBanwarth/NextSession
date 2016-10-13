@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Controller: sessionController', function () {
     // we work with "vm" instead of "sessionController" to have consistent verbiage
     // in test and controller

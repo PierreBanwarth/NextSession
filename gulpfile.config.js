@@ -41,26 +41,15 @@ exports.sassIncludePaths = [
  *
  * For more details and option, see https://github.com/chimurai/http-proxy-middleware/
  */
-/*
- {
+exports.backendProxy = [
+  {
     context: '/api',
     options: {
       pathRewrite: {'^/api': ''},
-      target: 'http://api.icndb.com/',
-      changeOrigin: true
-    }
-  },
-  {
-    context: '/station',
-    options: {
-      pathRewrite: {'^/station': ''},
-      target: 'http://www.metromobilite.fr',
+      target: 'http://api.icndb.com',
       changeOrigin: true
     }
   }
-*/
-exports.backendProxy = [
-  
 ];
 
 /**

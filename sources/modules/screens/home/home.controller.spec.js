@@ -8,7 +8,7 @@ describe('Controller: homeController', function () {
       vm = $controller('homeController', {}, {});
     }));
 
-    it('should have vm.model defined and homeController.vm.model is equal to controllerAs vm test', function () {
+    it('Some data need to be set to display map', function () {
         // vm=this in controller
         expect(vm)
         .toBeDefined();

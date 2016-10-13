@@ -35,13 +35,26 @@
      * @param {Object} context The context to use.
      * @return {Object} The promise.
      */
-     
-     service.getSessions = function(context) {
-      data = $firebaseObject(ref);      
+     service.addSession = function(session) {
+      return ref.child('features')
+      .push(session)
+      .then(function(response){
+        if(response){
+          return reponse;
+        }
+        return $q.reject();
+      })
+      .catch(function(){
+        return 'Error, could not add session';
+      });
+    };
+      
+    service.getSessions = function(context) {
+      data = $firebaseObject(ref.child('features'));      
       return data.$loaded()
       .then(function(response) {
         if (response) {
-          return response.features;
+          return response;
         }
         return $q.reject();
       })
