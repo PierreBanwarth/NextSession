@@ -15,7 +15,8 @@
        vm.isOpen = false;
        $scope.events = {};
        vm.isLoading = true;
-
+       
+       $scope.selectedUser = { id: 1, name: 'Bob' };
     //fix an error with not set center caused by leaflet
     vm.center = {
       lat: 45.188616,
@@ -105,7 +106,7 @@
             $scope.validDialog = function(){
           // need to validate input by user
           if($scope.description && $scope.place){
-            sessionService.addSessions($scope.description, $scope.place, event.latlng.lat, event.latlng.lng);
+            sessionService.addSessions( $scope.place,$scope.description, event.latlng.lat, event.latlng.lng);
             $mdDialog.hide();
             $scope.description = '';
             $scope.place ='';

@@ -24,6 +24,7 @@
       templateUrl: 'modules/ui-components/tabElement/tabelement.html',
       scope: {
         stationName: '=name',
+        stationDescription: '=description',
         stationFreeCar: '=car',
         stationFreeSpace: '=free'
       }

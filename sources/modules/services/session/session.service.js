@@ -68,7 +68,7 @@
     };
     service.getMarkers = function() {
       if (markers && angular.isDefined(markers)) {
-        return markers;              
+        return markers;
       }
       return 'error';
     };
@@ -78,11 +78,13 @@
     var dataMerge = function() {
       var sessions = dataSession;
       angular.forEach( dataSession, function(value, key){
+        console.log(value);
         var marker = {
           lat: value.geometry.coordinates[1],
           lng: value.geometry.coordinates[0],
           focus: false,
           message: value.properties.name,
+          description: value.properties.description,
             // + ' ' + availableCar + '/' + totalCar,
           draggable: false,
         };

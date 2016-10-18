@@ -1,9 +1,14 @@
 
 <md-dialog class="md-default-theme md-content-overflow transition-in">
-	<md-dialog-content class="sticky-container">
 
+	<md-dialog-content>
 		<div>
-			{{::label}} 
+			<md-input-container>
+				<label>Adress</label>
+				<input type="text" ng-model="label" required>
+			</md-input-container>	
+		</div>
+		<div>
 			<md-input-container>
 				<label>Place name</label>
 				<input type="text" ng-model="place" required>
@@ -13,7 +18,6 @@
 				<input type="text" ng-model="description" required>
 			</md-input-container>
 		</div>
-		<md-datepicker ng-model="birthday"></md-datepicker>
 		<md-button class="md-primary" ng-click="closeDialog()">Cancel</md-button>
 		<md-button class="md-primary" ng-click="validDialog()">Ok</md-button>
 	</md-dialog-content>
