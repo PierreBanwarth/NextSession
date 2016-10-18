@@ -10,6 +10,7 @@
     'ui.router',
     'ui.bootstrap',
     'leaflet-directive',
+    'ngMessages',
     'ngMaterial',
     'firebase'
   ]);

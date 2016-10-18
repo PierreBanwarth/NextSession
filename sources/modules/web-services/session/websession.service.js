@@ -48,7 +48,7 @@
         return 'Error, could not add session';
       });
     };
-      
+    
     service.getSessions = function(context) {
       data = $firebaseObject(ref.child('features'));      
       return data.$loaded()

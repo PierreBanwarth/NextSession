@@ -1,15 +1,47 @@
-<md-sidenav md-component-id="left" class="md-sidenav-left" md-is-open="isOpen">
-    <div ng-repeat="marker in markers">
-        <div tabelement name="marker.message"></div>
-    </div>
-</md-sidenav>
 <md-content>
+    <md-sidenav md-component-id="left" class="md-sidenav-left" md-is-open="vm.isOpen">
+        <md-list flex="">
+            <md-divider ng-repeat="marker in markers">
+                <md-list-item class="md-2-line" aria-label="centrer" ng-click="vm.setCenter(marker)">
+                    <div tabelement name="marker.message"></div> 
+                </md-list-item>
+            </md-divider>
+        </md-list>
+    </md-sidenav>
     <section id="home-screen" class="home-screen container-fluid">
-        <div ui-loading="isLoading"></div>
+        <div ui-loading="vm.isLoading"></div>
         <div class="well">
-            <leaflet class="map" defaults="defaults" lf-center="center" markers="markers" event-broadcast="events"></leaflet>
-            <button ng-click="isOpen=!isOpen" ng-init="isOpen=false">Liste des sessions</button>
-            
-        </div>
-    </section>
+            <md-autocomplete 
+            md-search-text-change=" vm.getLocation()"
+            md-selected-item-change= "vm.selectedUpdate()"
+            md-selected-item="vm.selectedItem"
+            md-search-text="vm.searchText" 
+            md-items="item in vm.places" 
+            md-delay="150"
+            md-item-text="item.properties.label">
+            <!-- display list of result -->
+            <span md-highlight-text="searchText">
+                {{item.properties.label}}
+            </span>
+            <!-- not found message -->
+            <md-not-found>
+                No matches found.
+            </md-not-found>
+        </md-autocomplete>
+
+        <leaflet class="map"
+        defaults="vm.defaults"
+        bounds="vm.bounds"
+        lf-center="vm.center" 
+        markers="markers" 
+        controls="controls" 
+        event-broadcast="events">
+    </leaflet>
+    <md-button class="md-raised" ng-click="vm.switch()">Sessions</md-button>
+
+</div>
+<li ng-repeat="label in labels track by $index">
+    {{label}}
+</li>
+</section>
 </md-content>

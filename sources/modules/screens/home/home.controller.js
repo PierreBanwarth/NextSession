@@ -4,13 +4,11 @@
   angular
   .module('app')
   .controller('homeController', homeController);
-  /**           
+  /**
    * Displays the home screen.
    * @constructor
    */
-   function homeController(logger,
-    stationService
-    ) {
+   function homeController(logger,stationService) {
     logger = logger.getLogger('home');
     /*
      * View model
@@ -23,9 +21,9 @@
       lng: 5.725969,
       zoom: 1
     };
-    vm.defaults= {
+    vm.defaults = {
       zoomControlPosition: 'topright'
-    }
+    };
     vm.markers = [];
     /*
     * load data is calling a updating service and update data such as center and markers.

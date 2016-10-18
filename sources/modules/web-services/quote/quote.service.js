@@ -17,7 +17,7 @@
      */
 
     var ROUTES = {
-      randomJoke: '/jokes/random?escape=javascript&limitTo=[:category]'
+      randomJoke: 'https://search.mapzen.com/v1/search'
     };
 
     /*

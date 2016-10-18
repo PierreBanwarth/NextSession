@@ -4,28 +4,78 @@
 
   angular
   .module('app')
-  .controller('sessionController', ['$scope','$mdDialog' ,'logger','sessionService',
-    function($scope,$mdDialog, logger,sessionService){
+  .controller('sessionController', ['$scope','$mdDialog' ,'logger','sessionService','geoService','leafletBoundsHelpers',
+    function($scope, $mdDialog, logger,sessionService, geoService,leafletBoundsHelpers){
 
-      logger = logger.getLogger('home');
+      logger = logger.getLogger('Session');
       /*
        * View model
        */
+       var vm = this;
+       vm.isOpen = false;
        $scope.events = {};
-       $scope.isLoading = true;
-       $scope.quote = null;
+       vm.isLoading = true;
+
     //fix an error with not set center caused by leaflet
-    $scope.center = {
+    vm.center = {
       lat: 45.188616,
       lng: 5.725969,
       zoom: 1
     };
-    $scope.defaults= {
+    vm.defaults= {
       zoomControlPosition: 'topright'
     };
-    
+    vm.selectedItem ;
+    vm.places = [];
+
+    //function who take a marker and make the center of the map
+    vm.setCenter = function(marker){
+      vm.center = {
+        lat: marker.lat,
+        lng: marker.lng,
+        zoom: 18
+      };
+    };
+    // function used to show / hide the side nav
+    vm.switch = function(){
+      vm.isOpen = !vm.isOpen;
+    };
+    // work in progress in order to give revert geocoding tool bar
+    vm.getLocation = function(){
+      if(vm.searchText !== '' && angular.isDefined(vm.searchText)){
+        geoService
+        .getGeocode(vm.searchText)
+        .then(function(geoData) {
+          vm.places = geoData;
+        });  
+      }
+      
+    }   
+    // end of work in progress
+
+    //Selected update function when user select a geographical zone with the revert geocoding search bar
+    // the map is centerd on the border box of the zone
+    // if the zone avec a border box then use it else use center.
+    vm.selectedUpdate = function(){
+      // if the selected item have a bbox attributes
+      if( angular.isDefined(vm.selectedItem.bbox)){
+        vm.bounds = leafletBoundsHelpers.createBoundsFromArray([
+          [ vm.selectedItem.bbox[1] , vm.selectedItem.bbox[0] ],
+          [ vm.selectedItem.bbox[3] , vm.selectedItem.bbox[2] ]
+          ]);        
+      // else selected item is to small to have a bbox and we need to use center properties
+    }else{
+      vm.center = {
+        lat: vm.selectedItem.geometry.coordinates[1],
+        lng: vm.selectedItem.geometry.coordinates[0],
+        zoom: 18
+      };
+    }
 
 
+  }     
+    // Function who display the modale to add a session on the map
+    // TODO need to extract to an external file the modale controller
     $scope.showCustom = function(event) {
      $mdDialog.show({
       clickOutsideToClose: true,
@@ -39,44 +89,48 @@
         }
         $scope.validDialog = function(){
           // need to validate input by user
-          console.log(event);
           sessionService.addSessions($scope.description, $scope.place, event.latlng.lat, event.latlng.lng);
           $mdDialog.hide();
           $scope.description = '';
           $scope.place ='';
-          $scope.update();
+          vm.update();
 
         }
       }
     });
    };
+
+   // function who show dialog to add a new session
    $scope.$on("leafletDirectiveMap.click", function(event, args){
     var leafEvent = args.leafletEvent;
     $scope.showCustom(leafEvent);
     // need to send new session to database
   });
-   $scope.update= function(){
+   //function who get session from firebase
+   vm.update= function(){
     sessionService
     .getSessions()
     .then(function(dataSession) {
       $scope.dataSession = dataSession;
     });
     $scope.markers = sessionService.getMarkers();
-  }
-  $scope.init = function() { 
+  };
 
+  vm.init = function() { 
     logger.log('init sessions');
+    vm.getLocation();
     sessionService
     .getSessions()
     .then(function(dataSession) {
       $scope.dataSession = dataSession;
     }).finally(function() {
-      $scope.isLoading = false;
+      vm.isLoading = false;
     });
     $scope.markers = sessionService.getMarkers();
   };
-  $scope.init();
+  vm.init();
 }
-])
+]);
 })
 ();
+//

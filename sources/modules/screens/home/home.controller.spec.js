@@ -1,4 +1,6 @@
+
 describe('Controller: homeController', function () {
+  'use strict';
     // we work with "vm" instead of "homeController" to have consistent verbiage
     // in test and controller
     var vm;
@@ -6,7 +8,7 @@ describe('Controller: homeController', function () {
     beforeEach(module('app'));
     beforeEach(inject(function ($controller) {
       vm = $controller('homeController', {}, {});
-    }));
+  }));
 
     it('Some data need to be set to display map', function () {
         // vm=this in controller
@@ -26,5 +28,5 @@ describe('Controller: homeController', function () {
             .toBeDefined();
         expect(vm.model.name)
         .toEqual("Batman");*/
-      });
-  });
+    });
+});
