@@ -71,37 +71,68 @@
         zoom: 18
       };
     }
-
-
-  }     
+  };     
     // Function who display the modale to add a session on the map
     // TODO need to extract to an external file the modale controller
     $scope.showCustom = function(event) {
-     $mdDialog.show({
-      clickOutsideToClose: true,
-      scope: $scope,        
-      preserveScope: true,           
-      templateUrl: 'modules/screens/session/modale.tpl.html',
-      parent: angular.element(document.body),
-      controller: function DialogController($scope, $mdDialog) {
-        $scope.closeDialog = function() {
-          $mdDialog.hide();
-        }
-        $scope.validDialog = function(){
+      geoService
+      .getReverseGeocode(event.latlng.lat, event.latlng.lng)
+      .then(function(geoData) {
+        $scope.cleanScope();
+        $scope.country = geoData.country;
+        $scope.country_a = geoData.country_a;
+        $scope.county = geoData.county;
+        $scope.label = geoData.label;
+        $scope.street = geoData.street;
+        $scope.locality = geoData.locality;
+        $scope.localadmin = geoData.localadmin;
+        $scope.macrocounty = geoData.macrocounty;
+        $scope.macroregion = geoData.macroregion;
+        $scope.name = geoData.name;
+        $scope.region = geoData.region;
+      }) .finally(function() {
+        $mdDialog.show({
+          clickOutsideToClose: true,
+          scope: $scope,        
+          preserveScope: true,           
+          templateUrl: 'modules/screens/session/modale.tpl.html',
+          parent: angular.element(document.body),
+          controller: function DialogController($scope, $mdDialog,geoService) {
+            var vm2 = this;
+            $scope.closeDialog = function() {
+              $mdDialog.hide();
+            }
+            $scope.validDialog = function(){
           // need to validate input by user
-          sessionService.addSessions($scope.description, $scope.place, event.latlng.lat, event.latlng.lng);
-          $mdDialog.hide();
-          $scope.description = '';
-          $scope.place ='';
-          vm.update();
-
+          if($scope.description && $scope.place){
+            sessionService.addSessions($scope.description, $scope.place, event.latlng.lat, event.latlng.lng);
+            $mdDialog.hide();
+            $scope.description = '';
+            $scope.place ='';
+            vm.update();
+          }
         }
+        // when clicking on map we fill all variable to display the city.
       }
     });
-   };
+      });
+    };
 
    // function who show dialog to add a new session
-   $scope.$on("leafletDirectiveMap.click", function(event, args){
+   $scope.cleanScope = function(){
+    $scope.country = '';
+    $scope.country_a = '';
+    $scope.county = '';
+    $scope.label = '';
+    $scope.street = '';
+    $scope.locality = '';
+    $scope.localadmin = '';
+    $scope.macrocounty =''; 
+    $scope.macroregion = '';
+    $scope.name = '';
+    $scope.region = '';
+  }
+  $scope.$on("leafletDirectiveMap.click", function(event, args){
     var leafEvent = args.leafletEvent;
     $scope.showCustom(leafEvent);
     // need to send new session to database

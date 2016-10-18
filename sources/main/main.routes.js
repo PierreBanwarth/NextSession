@@ -22,7 +22,7 @@
         controller: 'shellController as shell'
       })
       .state('app.home', {
-        url: '/',
+        url: '/home',
         templateUrl: 'modules/screens/home/home.html',
         controller: 'homeController as vm',
         data: {title: gettext('Home')}
@@ -34,7 +34,7 @@
         data: {title: gettext('About')}
       })
       .state('app.session', {
-        url: '/session',
+        url: '/',
         templateUrl: 'modules/screens/session/session.html',
         controller: 'sessionController as vm',
         data: {title: gettext('Session')}
