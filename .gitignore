@@ -4,7 +4,6 @@
 ## Web
 node_modules/
 /.tmp/
-/dist/
 .sass-cache
 .idea/
 npm-debug.log
