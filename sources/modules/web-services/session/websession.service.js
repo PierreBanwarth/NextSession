@@ -36,6 +36,7 @@
      * @return {Object} The promise.
      */
      service.addSession = function(session) {
+      console.log(session);
       return ref.child('features')
       .push(session)
       .then(function(response){

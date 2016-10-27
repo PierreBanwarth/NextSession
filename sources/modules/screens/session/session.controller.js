@@ -25,8 +25,8 @@
           if(event.name === 'leafletDirectiveMarker.click'){
              //$scope.showCustom(event);
              vm.setCurrentSession(args.model);
-          }
-        });
+           }
+         });
       }
 
       vm.isLoading = true;
@@ -149,21 +149,28 @@
           preserveScope: true,           
           templateUrl: 'modules/screens/session/modale.tpl.html',
           parent: angular.element(document.body),
-          controller: function DialogController($scope, $mdDialog,geoService) {
+          controller: function DialogController($scope, $mdDialog ,geoService) {
             var vm2 = this;
             $scope.closeDialog = function() {
               $mdDialog.hide();
             }
             $scope.validDialog = function(){
-          // need to validate input by user
-          if($scope.description && $scope.place){
-            sessionService.addSessions( $scope.place,$scope.description, event.latlng.lat, event.latlng.lng);
-            $mdDialog.hide();
-            $scope.description = '';
-            $scope.place ='';
-            vm.update();
+            // need to validate input by user
+            console.log($scope.description);
+            console.log($scope.place);
+            console.log($scope.freq);
+            console.log($scope.start);
+            if($scope.description && $scope.place && $scope.freq && $scope.start){
+              sessionService.addSessions( $scope.place,$scope.description, $scope.freq , $scope.start ,event.latlng.lat, event.latlng.lng);
+              $mdDialog.hide();
+              $scope
+              $scope.description = '';
+              $scope.place ='';
+              $scope.freq = '';
+              $scope.start = '';
+              vm.update();
+            }
           }
-        }
         // when clicking on map we fill all variable to display the city.
       }
     });
@@ -222,8 +229,10 @@
         $scope.dataSession = dataSession;
       }).finally(function() {
         vm.isLoading = false;
+
       });
       $scope.markers = sessionService.getMarkers();
+      console.log($scope.markers);
     })
   };
   vm.init();

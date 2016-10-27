@@ -13,19 +13,23 @@
 				<label>Place name</label>
 				<input type="text" ng-model="place" required>
 			</md-input-container>
+
 			<md-input-container>
 				<label>Frequence</label>
-				<input type="text" ng-model="frquence" required>
+				<input type="text" ng-model="freq" required>
 			</md-input-container>
+
 			<md-input-container>
 				<label>Start time</label>
 				<input type="text" ng-model="start" required>
 			</md-input-container>
+
 			<md-input-container>
 				<label>About</label>
 				<input type="text" ng-model="description" required>
 			</md-input-container>
 		</div>
+
 		<md-button class="md-primary" ng-click="closeDialog()">Cancel</md-button>
 		<md-button class="md-primary" ng-click="validDialog()">Ok</md-button>
 	</md-dialog-content>

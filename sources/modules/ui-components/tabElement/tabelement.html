@@ -1,5 +1,9 @@
 <div class="tabelement">
 	{{stationName}} : {{stationDescription}}
+	<div>
+		{{stationFrequence}} : {{stationStart}}		
+	</div>
+	
 	<!-- just for station car to remove for NextSession deployment -->
 	<div ng-if="stationFreeCar && stationFreeSpace">
 		<i class="fa fa-car" aria-hidden="true"></i> {{stationFreeCar}} / {{stationFreeSpace}}

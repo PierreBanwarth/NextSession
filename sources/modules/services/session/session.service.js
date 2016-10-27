@@ -21,15 +21,18 @@
      logger = logger.getLogger('Session logic');
 
 
-     service.addSessions = function(place, description, lat , lng) {
+     service.addSessions = function(place, description,freq,start, lat , lng) {
       var marker = {
         lat: lat,
         lng: lng,
         focus: false,
         message: description,
+        frequence: freq,
+        start: start,
         // + ' ' + availableCar + '/' + totalCar,
         draggable: false,
       };
+      console.log(marker);
       markers.push(marker);
       /*if (markers && angular.isDefined(markers)) {
         return markers;              
@@ -41,9 +44,12 @@
         geometry : coord,
         properties : {
           description : description,
-          name : place
+          name : place,
+          frequence : freq,
+          start : start
         }
       };
+      console.log(marker)
       return webSessionService
       .addSession(marker).then(function(response){
         logger.log('Adding new session');
@@ -97,6 +103,8 @@
           focus: false,
           message: value.properties.name,
           description: value.properties.description,
+          frequence: value.properties.description,
+          start: value.properties.start,
             // + ' ' + availableCar + '/' + totalCar,
             draggable: false,
           };

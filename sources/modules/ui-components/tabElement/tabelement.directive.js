@@ -25,6 +25,8 @@
       scope: {
         stationName: '=name',
         stationDescription: '=description',
+        stationFrequence: '=frequence',
+        stationStart: '=start',
         stationFreeCar: '=car',
         stationFreeSpace: '=free'
       }

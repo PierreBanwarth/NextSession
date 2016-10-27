@@ -3,7 +3,7 @@
         <md-list flex="">
             <md-divider ng-repeat="marker in markers">
                 <md-list-item class="md-2-line" aria-label="centrer" ng-click="vm.setCenter(marker)">
-                    <div tabelement name="marker.message" description="marker.description"></div> 
+                    <div tabelement name="marker.message" description="marker.description" frequence="marker.frequence" start='marker.start'></div> 
                 </md-list-item>
             </md-divider>
         </md-list>
@@ -37,19 +37,22 @@
         controls="controls" 
         event-broadcast="events">
     </leaflet>
-    <md-button class="md-raised" ng-click="vm.switch()">Sessions</md-button>
+    <md-button class="md-raised" ng-click="vm.switch()">Show sessions list</md-button>
     <!-- Here is the code for main information about the session -->
     <md-card ng-if="vm.currentSessionShow">
         <md-card-content>
             <h2>{{vm.currentSession.message}}</h2>
             <p>{{vm.currentSession.description}}</p>
+            <p>{{vm.currentSession.start}}</p>
+            <p>{{vm.currentSession.frequence}}</p>
+
             
         </md-card-content>
         <md-card-footer>
                <!-- On prend soin de renvoyer la description et le nom pour éviter de supprimer une session
                 qui aurais le même nom qu'une autre.            
             -->
-            <md-button class="md-warn" ng-click=vm.remove()>Remove session</md-button>
+            <md-button class="md-raised md-warn" ng-click=vm.remove()>Remove session</md-button>
         </md-card-footer>
 </md-card>
 
