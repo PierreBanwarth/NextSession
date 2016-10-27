@@ -48,11 +48,31 @@
         return 'Error, could not add session';
       });
     };
-    
+    service.removeSession = function(session){
+      // on supprime l'objet de data
+      console.log(data);
+      for (var test in data) {
+        if(data[test]){
+          if(data[test].properties){
+            if(data[test].properties.description === session.description &&
+             data[test].properties.name === session.message){
+              delete data[test];        
+            }   
+          }
+        }
+      }
+      // on sauvegarde la BD
+      return data.$save().then(function(ref) {
+
+
+      }, function(error) {
+        console.log("Error:", error);
+      });
+    };
     service.getSessions = function(context) {
       data = $firebaseObject(ref.child('features'));      
       return data.$loaded()
-      .then(function(response) {
+      .then(function(response) {  
         if (response) {
           return response;
         }

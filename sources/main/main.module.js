@@ -12,7 +12,7 @@
     'leaflet-directive',
     'ngMessages',
     'ngMaterial',
-    'firebase'
+    'firebase',
   ]);
 
 })();

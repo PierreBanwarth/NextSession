@@ -38,6 +38,20 @@
         event-broadcast="events">
     </leaflet>
     <md-button class="md-raised" ng-click="vm.switch()">Sessions</md-button>
+    <!-- Here is the code for main information about the session -->
+    <md-card ng-if="vm.currentSessionShow">
+        <md-card-content>
+            <h2>{{vm.currentSession.message}}</h2>
+            <p>{{vm.currentSession.description}}</p>
+            
+        </md-card-content>
+        <md-card-footer>
+               <!-- On prend soin de renvoyer la description et le nom pour éviter de supprimer une session
+                qui aurais le même nom qu'une autre.            
+            -->
+            <md-button class="md-warn" ng-click=vm.remove()>Remove session</md-button>
+        </md-card-footer>
+</md-card>
 
 </div>
 <li ng-repeat="label in labels track by $index">
