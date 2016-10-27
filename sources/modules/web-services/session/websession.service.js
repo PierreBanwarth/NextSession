@@ -36,7 +36,6 @@
      * @return {Object} The promise.
      */
      service.addSession = function(session) {
-      console.log(session);
       return ref.child('features')
       .push(session)
       .then(function(response){
@@ -51,12 +50,13 @@
     };
     service.removeSession = function(session){
       // on supprime l'objet de data
-      console.log(data);
       for (var test in data) {
         if(data[test]){
           if(data[test].properties){
             if(data[test].properties.description === session.description &&
              data[test].properties.name === session.message){
+              console.log(session)
+              console.log(data[test])
               delete data[test];        
             }   
           }

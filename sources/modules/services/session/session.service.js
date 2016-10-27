@@ -32,7 +32,6 @@
         // + ' ' + availableCar + '/' + totalCar,
         draggable: false,
       };
-      console.log(marker);
       markers.push(marker);
       /*if (markers && angular.isDefined(markers)) {
         return markers;              
@@ -49,7 +48,6 @@
           start : start
         }
       };
-      console.log(marker)
       return webSessionService
       .addSession(marker).then(function(response){
         logger.log('Adding new session');
@@ -57,6 +55,7 @@
     };
     // we need userLoocation in order to sort session by distance between user and session place
     service.getSessions = function(userLocation) {
+      markers = [];
       return webSessionService
       .getSessions()
       .then(function(response) {
@@ -69,6 +68,7 @@
       });      
     };
     service.removeSession = function(session){
+      console.log(session)
       return webSessionService
       .removeSession(session)
       .then(function(response) {
@@ -95,6 +95,7 @@
     * this function is merging data from two different web services.
     */
     var dataMerge = function(userLocation) {
+
       var sessions = dataSession;
       angular.forEach( dataSession, function(value, key){
         var marker = {
@@ -112,8 +113,12 @@
         });
 
       markers.sort(function(marker1, marker2){
-        return distance(userLocation.lat, userLocation.lng, marker1.lat, marker1.lng,'K') 
-        - distance(userLocation.lat, userLocation.lng, marker2.lat, marker2.lng,'K');
+        if(userLocation && marker1 && marker2){
+          return distance(userLocation.lat, userLocation.lng, marker1.lat, marker1.lng,'K') 
+          - distance(userLocation.lat, userLocation.lng, marker2.lat, marker2.lng,'K');  
+        }else{
+          return -1;
+        }
       });
     };
     var distance = function(lat1, lon1, lat2, lon2, unit) {

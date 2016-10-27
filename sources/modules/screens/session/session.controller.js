@@ -156,10 +156,6 @@
             }
             $scope.validDialog = function(){
             // need to validate input by user
-            console.log($scope.description);
-            console.log($scope.place);
-            console.log($scope.freq);
-            console.log($scope.start);
             if($scope.description && $scope.place && $scope.freq && $scope.start){
               sessionService.addSessions( $scope.place,$scope.description, $scope.freq , $scope.start ,event.latlng.lat, event.latlng.lng);
               $mdDialog.hide();
@@ -196,12 +192,13 @@
     $scope.showCustom(leafEvent);
     // need to send new session to database
   });
-  vm.remove= function(){
+  vm.remove = function(){
     sessionService
     .removeSession(vm.currentSession)
     .then(function(dataSession) {
       $scope.dataSession = dataSession;
     });
+    vm.currentSessionShow = false;
     vm.init();
   };
    //function who get session from firebase
@@ -232,7 +229,6 @@
 
       });
       $scope.markers = sessionService.getMarkers();
-      console.log($scope.markers);
     })
   };
   vm.init();
