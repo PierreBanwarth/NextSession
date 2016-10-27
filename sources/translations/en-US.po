@@ -19,7 +19,7 @@ msgstr "Session"
 #: modules/screens/about/about.html:3
 #: modules/shell/shell.html:15
 msgid "APP_NAME"
-msgstr "Starter Kit"
+msgstr "Next Session"
 
 #: modules/screens/home/home.html:5
 msgid "Hello world !"
