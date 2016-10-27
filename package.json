@@ -10,7 +10,8 @@
     "url": "git@github.com/thales-poles-ra/starter-kit.git"
   },
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "start": "node server.js"
   },
   "devDependencies": {
     "browser-sync": "^2.11.1",
